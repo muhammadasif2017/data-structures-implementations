@@ -89,6 +89,24 @@ class DoublyLinkedList {
     this.length--;
     return this.printList();
   }
+
+  reverse() {
+    if (!this.head.next) {
+      return this.head;
+    } // [1, 10, 5, 16]
+    let first = this.head; // first node - 1
+    this.tail = this.head; // last node - 1
+    let second = first.next; // second - 10
+    while (second !== null) {
+      let temp = second.next; // 16
+      second.next = first; // 5 -> 10
+      first = second; //  5
+      second = temp; // 16
+    }
+    this.head.next = null;
+    this.head = first;
+    return this;
+  }
 }
 
 const myLinkedList = new DoublyLinkedList(10);
