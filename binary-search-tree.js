@@ -15,20 +15,20 @@ class BinarySearchTree {
     const newNode = new Node(value);
     if (this.root) {
       let currentNode = this.root;
-      while(true) {
+      while (true) {
         if (newNode.value < currentNode.value) {
-            // Left
-            if (!currentNode.left) {
-              currentNode.left = newNode;
-              return this;
-            }
-            currentNode = currentNode.left;
+          // Left
+          if (!currentNode.left) {
+            currentNode.left = newNode;
+            return this;
+          }
+          currentNode = currentNode.left;
         } else {
           // Right
           if (newNode.value > currentNode.value) {
             if (!currentNode.right) {
               currentNode.right = newNode;
-              return this; 
+              return this;
             }
             currentNode = currentNode.right;
           }
@@ -66,7 +66,7 @@ class BinarySearchTree {
     }
     let currentNode = this.root;
     let parentNode = null;
-    while(currentNode) {
+    while (currentNode) {
       if (value < currentNode.value) {
         parentNode = currentNode;
         currentNode = currentNode.left;
@@ -85,8 +85,8 @@ class BinarySearchTree {
             // a child of parent
             if (currentNode.value < parentNode.value) {
               parentNode.left = currentNode.left;
-            // if parent < current, make left child a right
-            /// child of parent
+              // if parent < current, make left child a right
+              /// child of parent
             } else if (currentNode.value > parentNode.value) {
               parentNode.right = currentNode.left;
             }
@@ -102,9 +102,9 @@ class BinarySearchTree {
             // of the left the parent
             if (currentNode.value < parentNode.value) {
               parentNode.left = currentNode.right;
-            
-            // if parent < current, make right child a right child
-            // of the parent
+
+              // if parent < current, make right child a right child
+              // of the parent
             } else if (currentNode.value > parentNode.value) {
               parentNode.right = currentNode.right;
             }
@@ -114,12 +114,12 @@ class BinarySearchTree {
           // Option 3: Right child that has a left child
           let leftMost = currentNode.right.left;
           let leftMostParent = currentNode.right;
-          while(leftMost.left !== null) {
+          while (leftMost.left !== null) {
             leftMostParent = leftMost;
             leftMost = leftMost.left;
           }
 
-          // Parent left subtree is now leftmost 
+          // Parent left subtree is now leftmost
           // right subtree
           leftMostParent.left = leftMost.right;
           leftMost.left = currentNode.left;
@@ -139,6 +139,17 @@ class BinarySearchTree {
       }
     }
   }
+
+  maxDepth() {
+    return recursiveMaxDepth(this.root);
+  }
+}
+
+function recursiveMaxDepth(node) {
+  console.log("node", node);
+  return !node
+    ? 0
+    : Math.max(recursiveMaxDepth(node.left), recursiveMaxDepth(node.right)) + 1;
 }
 
 const myBinarySearchTree = new BinarySearchTree();
@@ -150,12 +161,12 @@ myBinarySearchTree.insert(170);
 myBinarySearchTree.insert(15);
 myBinarySearchTree.insert(1);
 console.log(myBinarySearchTree.lookup(5));
+console.log(myBinarySearchTree.maxDepth());
 
 function traverse(node) {
   const tree = { value: node.value };
-  tree.left = node.left === null ? null
-    : traverse(node.left);
-  tree.right = node.right === null ? null 
-    : traverse(node.right);
+  tree.left = node.left === null ? null : traverse(node.left);
+  tree.right = node.right === null ? null : traverse(node.right);
   return tree;
 }
+//console.log(traverse(myBinarySearchTree.root));
